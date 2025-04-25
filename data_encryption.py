@@ -72,9 +72,11 @@ def get_data(paths, engine, with_entropy=False):
                         start_idx = np.random.randint(0, len(encrypted_chunk) - block_size_to_read)
                         chunk_part = encrypted_chunk[start_idx:start_idx + block_size_to_read]
                         encrypted_array = 2 * np.frombuffer(chunk_part, dtype=np.uint8) / 255 - 0.5
+                        
                         if with_entropy:
                             bit_entropy, byte_entropy = entropy_from_bytes(encrypted_array)
                             encrypted_array = np.append(encrypted_array, [bit_entropy, byte_entropy])
+
                         encrypted.append(encrypted_array)
 
                     original.append(2*np.frombuffer(chunk, dtype=np.uint8)/255 - 0.5)
